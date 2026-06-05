@@ -1,0 +1,49 @@
+{% extends "base_auth.html" %}
+
+{% block title %}Login — PlacementMCKV{% endblock %}
+
+{% block auth_nav %}
+<a href="{% url 'accounts:register' %}" class="btn btn-light btn-sm">Register</a>
+{% endblock %}
+
+{% block auth_content %}
+<div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+        <h2 class="card-title text-center mb-1">Welcome Back</h2>
+        <p class="text-center text-muted mb-4">Sign in to your account</p>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                {{ form.username }}
+                {% for error in form.username.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.password.id_for_label }}" class="form-label">Password</label>
+                {{ form.password }}
+                {% for error in form.password.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mb-3">Sign In</button>
+        </form>
+
+        <p class="text-center text-muted mb-0">
+            Don't have an account?
+            <a href="{% url 'accounts:register' %}">Register here</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

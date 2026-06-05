@@ -1,0 +1,48 @@
+{% extends "base_dashboard.html" %}
+
+{% block page_title %}Job Details{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="card">
+    <div class="card-body">
+
+```
+    <h3>{{ job.title }}</h3>
+
+    <p>
+        <strong>Company:</strong>
+        {{ job.company.company_name }}
+    </p>
+
+    <p>
+        <strong>Package:</strong>
+        {{ job.package_lpa }} LPA
+    </p>
+
+    <p>
+        <strong>Minimum CGPA:</strong>
+        {{ job.minimum_cgpa }}
+    </p>
+
+    <p>
+        <strong>Deadline:</strong>
+        {{ job.application_deadline }}
+    </p>
+
+    <hr>
+
+    <p>{{ job.description }}</p>
+
+    {% if user.is_student %}
+    <a href="{% url 'applications:apply' job.pk %}" class="btn btn-success">
+        Apply Now
+    </a>
+    {% endif %}
+
+</div>
+```
+
+</div>
+
+{% endblock %}

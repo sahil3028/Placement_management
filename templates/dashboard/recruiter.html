@@ -1,0 +1,194 @@
+{% extends "base_dashboard.html" %}
+
+{% block title %}Recruiter Dashboard — PlacementMCKV{% endblock %}
+{% block page_title %}Recruiter Dashboard{% endblock %}
+
+{% block sidebar_nav %}
+{% include "includes/recruiter_sidebar.html" %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="row g-4">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="card-title mb-1">Welcome, {{ profile.recruiter_name }}!</h5>
+                    <p class="text-muted mb-0">{{ profile.designation }}</p>
+                </div>
+
+                <div>
+                <a href="{% url 'companies:create' %}" class="btn btn-primary me-2">
+                Add Company
+                </a>
+                <a href="{% url 'jobs:create' %}" class="btn btn-success">
+                Add Job
+                </a>
+</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm stat-card">
+            <div class="card-body">
+                <div class="text-muted small">Companies</div>
+                <div class="fs-3 fw-bold text-primary">{{ company_count }}</div>
+                <a href="{% url 'companies:list' %}" class="small text-decoration-none">Manage companies</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm stat-card">
+            <div class="card-body">
+                <div class="text-muted small">Jobs Posted</div>
+                <div class="fs-3 fw-bold">{{ job_count }}</div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm stat-card">
+            <div class="card-body">
+                <div class="text-muted small">Total Applicants</div>
+                <div class="fs-3 fw-bold">{{ applicant_count }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pt-3 px-4">
+                <h6 class="mb-0 fw-semibold">Recent Companies</h6>
+            </div>
+            <div class="card-body px-4 pb-4">
+                {% if recent_companies %}
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th>Location</th>
+                                <th>Jobs</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for company in recent_companies %}
+                            <tr>
+                                <td>{{ company.company_name }}</td>
+                                <td>{{ company.location }}</td>
+                                <td><span class="badge bg-secondary">{{ company.job_count }}</span></td>
+                                <td class="text-end">
+                                    <a href="{% url 'companies:detail' company.pk %}" class="btn btn-sm btn-outline-primary">View</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted mb-0">No companies yet. <a href="{% url 'companies:create' %}">Create your first company</a>.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-12">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white">
+            <h6 class="mb-0">Recent Applicants</h6>
+        </div>
+
+```
+    <div class="card-body">
+
+        {% if recent_applications %}
+
+        <div class="table-responsive">
+
+            <table class="table align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Job</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for application in recent_applications %}
+
+                    <tr>
+
+                        <td>
+                            <a href="{% url 'students:detail' application.student.id %}">
+                            {{ application.student.full_name }}
+                        </a>
+                        </td>
+
+                        <td>
+                            {{ application.job.title }}
+                        </td>
+
+                        <td>
+                            {{ application.get_status_display }}
+                        </td>
+
+                        <td>
+
+                            <a href="{% url 'applications:update_status' application.id 'SHORTLISTED' %}"
+                               class="btn btn-sm btn-warning">
+                                Shortlist
+                            </a>
+
+                            <a href="{% url 'applications:update_status' application.id 'INTERVIEW_SCHEDULED' %}"
+                               class="btn btn-sm btn-info">
+                                Interview
+                            </a>
+
+                            <a href="{% url 'applications:update_status' application.id 'SELECTED' %}"
+                               class="btn btn-sm btn-success">
+                                Select
+                            </a>
+
+                            <a href="{% url 'applications:update_status' application.id 'REJECTED' %}"
+                               class="btn btn-sm btn-danger">
+                                Reject
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <p class="text-muted mb-0">
+            No applicants yet.
+        </p>
+
+        {% endif %}
+
+    </div>
+</div>
+```
+
+</div>
+
+{% endblock %}

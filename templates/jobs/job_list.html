@@ -1,0 +1,59 @@
+{% extends "base_dashboard.html" %}
+
+{% block page_title %}Jobs{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="card">
+    <div class="card-body">
+
+```
+    {% if user.is_recruiter %}
+    <div class="mb-3">
+        <a href="{% url 'jobs:create' %}" class="btn btn-primary">
+            Create Job
+        </a>
+    </div>
+    {% endif %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Title</th>
+                <th>Package</th>
+                <th>Deadline</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for job in jobs %}
+            <tr>
+                <td>{{ job.company.company_name }}</td>
+                <td>{{ job.title }}</td>
+                <td>{{ job.package_lpa }} LPA</td>
+                <td>{{ job.application_deadline }}</td>
+
+                <td>
+                    <a href="{% url 'jobs:detail' job.pk %}" class="btn btn-sm btn-outline-primary">
+                        View
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">
+                    No jobs available.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+```
+
+</div>
+
+{% endblock %}

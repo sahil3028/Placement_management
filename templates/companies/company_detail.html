@@ -1,0 +1,67 @@
+{% extends "base_dashboard.html" %}
+
+{% block title %}{{ company.company_name }} — PlacementMCKV{% endblock %}
+{% block page_title %}{{ company.company_name }}{% endblock %}
+
+{% block sidebar_nav %}
+{% include "includes/recruiter_sidebar.html" %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h4 class="mb-1">{{ company.company_name }}</h4>
+                        <p class="text-muted mb-0">
+                            <i class="bi bi-geo-alt me-1"></i>{{ company.location }}
+                        </p>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'companies:update' company.pk %}" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-pencil me-1"></i>Edit
+                        </a>
+                        <a href="{% url 'companies:delete' company.pk %}" class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash me-1"></i>Delete
+                        </a>
+                    </div>
+                </div>
+
+                {% if company.website %}
+                <p class="mb-3">
+                    <i class="bi bi-link-45deg me-1"></i>
+                    <a href="{{ company.website }}" target="_blank" rel="noopener noreferrer">{{ company.website }}</a>
+                </p>
+                {% endif %}
+
+                <h6 class="text-uppercase text-muted fw-semibold">About</h6>
+                <p class="mb-0">{{ company.description|linebreaksbr }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h6 class="text-uppercase text-muted fw-semibold mb-3">Overview</h6>
+                <dl class="mb-0">
+                    <dt class="text-muted small">Jobs Posted</dt>
+                    <dd class="fw-semibold">{{ company.job_count }}</dd>
+
+                    <dt class="text-muted small mt-2">Created</dt>
+                    <dd>{{ company.created_at|date:"F d, Y" }}</dd>
+
+                    <dt class="text-muted small mt-2">Managed By</dt>
+                    <dd>{{ company.created_by.recruiter_profile.recruiter_name }}</dd>
+                </dl>
+            </div>
+        </div>
+
+        <a href="{% url 'companies:list' %}" class="btn btn-link ps-0 mt-2">
+            <i class="bi bi-arrow-left me-1"></i>Back to companies
+        </a>
+    </div>
+</div>
+{% endblock %}

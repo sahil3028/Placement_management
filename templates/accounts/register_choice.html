@@ -1,0 +1,51 @@
+{% extends "base_auth.html" %}
+
+{% block title %}Register — PlacementMCKV{% endblock %}
+
+{% block auth_nav %}
+<a href="{% url 'accounts:login' %}" class="btn btn-outline-light btn-sm">Login</a>
+{% endblock %}
+
+{% block auth_card_class %}col-12 col-md-10 col-lg-8{% endblock %}
+
+{% block auth_content %}
+<div class="text-center mb-4">
+    <h2 class="fw-bold">Create Your Account</h2>
+    <p class="text-muted">Choose how you want to use PlacementMCKV</p>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm border-0 role-card">
+            <div class="card-body p-4 text-center">
+                <div class="role-icon bg-primary-subtle text-primary rounded-circle mx-auto mb-3">
+                    <i class="bi bi-person-badge"></i>
+                </div>
+                <h4>Student</h4>
+                <p class="text-muted">Browse jobs, apply to companies, and track your placement journey.</p>
+                <a href="{% url 'accounts:register_student' %}" class="btn btn-primary w-100">
+                    Register as Student
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm border-0 role-card">
+            <div class="card-body p-4 text-center">
+                <div class="role-icon bg-success-subtle text-success rounded-circle mx-auto mb-3">
+                    <i class="bi bi-building"></i>
+                </div>
+                <h4>Recruiter</h4>
+                <p class="text-muted">Post jobs, manage companies, and review student applications.</p>
+                <a href="{% url 'accounts:register_recruiter' %}" class="btn btn-success w-100">
+                    Register as Recruiter
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p class="text-center text-muted mt-4 mb-0">
+    Already have an account? <a href="{% url 'accounts:login' %}">Sign in</a>
+</p>
+{% endblock %}

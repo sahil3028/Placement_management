@@ -1,0 +1,186 @@
+{% extends "base_dashboard.html" %}
+
+{% block title %}Student Dashboard — PlacementMCKV{% endblock %}
+{% block page_title %}Student Dashboard{% endblock %}
+
+{% block sidebar_nav %}
+
+<ul class="nav flex-column gap-1">
+
+```
+<li class="nav-item">
+    <a class="nav-link text-white active"
+       href="{% url 'dashboard:student' %}">
+        Dashboard
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link text-white"
+       href="{% url 'jobs:list' %}">
+        Browse Jobs
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link text-white"
+       href="{% url 'applications:list' %}">
+        My Applications
+    </a>
+</li>
+```
+
+</ul>
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="row g-3 mb-4">
+
+```
+<div class="col-md-3">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="text-muted small">
+                Applications
+            </div>
+            <h3>{{ total_applications }}</h3>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="text-muted small">
+                Interviews
+            </div>
+            <h3>{{ total_interviews }}</h3>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="text-muted small">
+                Selected
+            </div>
+            <h3>{{ total_selected }}</h3>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="text-muted small">
+                Rejected
+            </div>
+            <h3>{{ total_rejected }}</h3>
+        </div>
+    </div>
+</div>
+```
+
+</div>
+
+<div class="row g-4">
+
+```
+<div class="col-md-4">
+
+   <div class="card shadow-sm">
+    <div class="card-body">
+
+        <h5>{{ profile.full_name }}</h5>
+
+        <p>
+            {{ profile.college_name }}
+        </p>
+
+        <p>
+            {{ profile.branch }}
+        </p>
+
+        <p>
+            CGPA: {{ profile.cgpa }}
+        </p>
+
+        <p>
+            Profile Completion:
+            {{ profile.profile_completion_percentage }}%
+        </p>
+
+        <a href="{% url 'students:edit_profile' %}"
+           class="btn btn-primary">
+            Edit Profile
+        </a>
+
+    </div>
+</div>
+
+</div>
+
+<div class="col-md-8">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+            Recent Applications
+        </div>
+
+        <div class="card-body">
+
+            <table class="table">
+
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for application in recent_applications %}
+
+                    <tr>
+                        <td>
+                            {{ application.job.company.company_name }}
+                        </td>
+
+                        <td>
+                            {{ application.job.title }}
+                        </td>
+
+                        <td>
+                            {{ application.get_status_display }}
+                        </td>
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="3">
+                            No applications yet.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+{% endblock %}

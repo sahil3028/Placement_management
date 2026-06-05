@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block body_class %}dashboard-page{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout d-flex">
+    <aside class="sidebar bg-dark text-white">
+        <div class="sidebar-header p-3 border-bottom border-secondary">
+            <a href="{% url 'dashboard:home' %}" class="text-white text-decoration-none fw-bold">
+                <i class="bi bi-mortarboard-fill me-2"></i>PlacementMCKV
+            </a>
+            <div class="small text-secondary mt-1">{{ user.get_role_display }}</div>
+        </div>
+
+        <nav class="sidebar-nav p-3">
+
+    {% if user.role == "STUDENT" %}
+        {% include "includes/student_sidebar.html" %}
+    {% elif user.role == "RECRUITER" %}
+        {% include "includes/recruiter_sidebar.html" %}
+    {% elif user.role == "ADMIN" or user.is_superuser %}
+        {% include "includes/admin_sidebar.html" %}
+    {% endif %}
+
+</nav>
+
+
+        <div class="sidebar-footer p-3 border-top border-secondary mt-auto">
+            <div class="small text-secondary mb-2">{{ user.username }}</div>
+            <a href="{% url 'accounts:logout' %}" class="btn btn-outline-light btn-sm w-100">
+                <i class="bi bi-box-arrow-right me-1"></i>Logout
+            </a>
+        </div>
+    </aside>
+    <main class="dashboard-main flex-grow-1">
+        <header class="dashboard-topbar bg-white border-bottom px-4 py-3">
+            <h1 class="h4 mb-0">{% block page_title %}Dashboard{% endblock %}</h1>
+        </header>
+        <div class="dashboard-content p-4">
+            {% block dashboard_content %}{% endblock %}
+        </div>
+    </main>
+</div>
+{% endblock %}

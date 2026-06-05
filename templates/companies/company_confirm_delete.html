@@ -1,0 +1,41 @@
+{% extends "base_dashboard.html" %}
+
+{% block title %}Delete {{ company.company_name }} — PlacementMCKV{% endblock %}
+{% block page_title %}Delete Company{% endblock %}
+
+{% block sidebar_nav %}
+{% include "includes/recruiter_sidebar.html" %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm border-danger">
+            <div class="card-body p-4">
+                <div class="text-center mb-4">
+                    <i class="bi bi-exclamation-triangle text-danger display-5"></i>
+                    <h4 class="mt-3">Delete Company?</h4>
+                </div>
+
+                <p class="text-center">
+                    Are you sure you want to delete <strong>{{ company.company_name }}</strong>?
+                </p>
+
+                {% if company.job_count %}
+                <div class="alert alert-warning">
+                    <i class="bi bi-info-circle me-1"></i>
+                    This company has <strong>{{ company.job_count }}</strong> job posting(s).
+                    Deleting it will also remove all associated jobs and applications.
+                </div>
+                {% endif %}
+
+                <form method="post" class="d-flex gap-2 justify-content-center">
+                    {% csrf_token %}
+                    <a href="{% url 'companies:detail' company.pk %}" class="btn btn-outline-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
